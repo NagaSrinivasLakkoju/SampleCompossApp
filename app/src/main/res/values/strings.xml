@@ -2,4 +2,6 @@
     <string name="app_name">SampleCompossApp</string>
     <string name="title_activity_sample">Sample</string>
     <string name="title">Compose Examples</string>
+    <string name="no_data_available">No Data Available</string>
+    <string name="problem_occurred">Problem Occurred</string>
 </resources>

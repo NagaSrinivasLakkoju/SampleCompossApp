@@ -25,7 +25,7 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 @RequiresApi(Build.VERSION_CODES.O)
 @ExperimentalAnimationApi
 @Composable
-fun MainActivityContent(scaffoldState: ScaffoldState, mainViewModel: MainViewModel) {
+fun MainActivityContent(scaffoldState: ScaffoldState) {
     val navController = rememberAnimatedNavController()
     Surface(
         modifier = Modifier.fillMaxSize()
@@ -129,7 +129,7 @@ fun MainActivityContent(scaffoldState: ScaffoldState, mainViewModel: MainViewMod
                 popExitTransition = {
                     slideOutOfContainer(AnimatedContentScope.SlideDirection.Right, animationSpec = tween(700))
                 }){
-                HomeScreen(mainViewModel)
+                HomeScreen()
             }
 
         }

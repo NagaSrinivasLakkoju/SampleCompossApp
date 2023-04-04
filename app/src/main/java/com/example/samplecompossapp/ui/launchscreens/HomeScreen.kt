@@ -22,14 +22,14 @@ import com.example.samplecompossapp.ui.viewmodel.MainViewModel
 @RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun HomeScreen(mainViewModel: MainViewModel) {
+fun HomeScreen() {
     val navController = rememberNavController()
     Scaffold(
         //  topBar = { TopBar() },
         bottomBar = { BottomNavigationBar(navController) },
         content = { padding -> // We have to pass the scaffold inner padding to our content. That's why we use Box.
             Box(modifier = Modifier.padding(padding)) {
-                Navigation(navController = navController,mainViewModel)
+                Navigation(navController = navController)
             }
         },
         backgroundColor = colorResource(R.color.white)
@@ -42,16 +42,13 @@ fun HomeScreen(mainViewModel: MainViewModel) {
 @SuppressLint("NewApi")
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun Navigation(
-    navController: NavHostController,
-    mainViewModel: MainViewModel
-) {
+fun Navigation(navController: NavHostController) {
     NavHost(navController, startDestination = NavigationItem.HomeView.route) {
         composable(NavigationItem.HomeView.route) {
             HomeView()
         }
         composable(NavigationItem.MoviesView.route) {
-            MoviesView(mainViewModel)
+            MoviesView()
         }
         composable(NavigationItem.PlantsView.route) {
             PlantsView(navController)

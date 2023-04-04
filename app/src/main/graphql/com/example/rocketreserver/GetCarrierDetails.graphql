@@ -1,0 +1,21 @@
+
+query GetCarrierDetails($id : ID!){
+
+    carrier(id: $id){
+        id
+        name
+        logoUrl
+        phoneNumber
+    }
+    applicationSettings {
+        nationsLogoUrl
+    }
+    benefits {
+        wallets {
+            currentBalance
+        }
+    }
+}
+
+
+

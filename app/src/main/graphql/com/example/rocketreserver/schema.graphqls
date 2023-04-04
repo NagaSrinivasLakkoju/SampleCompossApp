@@ -1,0 +1,642 @@
+type Query {
+  """
+  Get Nations Benefits carrier configuration based on the subdomain or carrierId and planId
+  """
+  carrier(id: ID, subdomain: String, planId: ID): Carrier
+
+  """
+  Get Nations Benefits Phone Number & tty with Nations LOGO URL
+  """
+  applicationSettings: ApplicationSettings!
+
+  """
+  it will return the promotional banners based on the carrierId and planId
+  """
+  banners: [PromotionalBanner!]!
+
+  """
+  Get Nations Benefits member data for specific member with respect to carrierId and planId
+  """
+  member: Member
+
+  """
+  Get member's Benefit, Wallet and Card Details data for specific member with respect to carrierId and planId
+  """
+  benefits: [Benefit!]!
+
+  """
+  Get All HealthConditions
+  """
+  healthConditions: [String!]!
+}
+
+type Mutation {
+  """
+  Add or Update  member's HealthConditions  data for specific member with respect to nhmemberId and Category
+  """
+  updateMemberHealthConditions(input: [UpdateMemberHealthConditionsInput!]!): [String!]!
+}
+
+"""
+A banner to be shown to the member. Used for promotional communication.
+"""
+type PromotionalBanner {
+  """
+  Title of the banner (requried)
+  """
+  title: String!
+
+  """
+  Contents of the banner(required)
+  """
+  content: String!
+
+  """
+  CTA button text
+  """
+  actionText: String
+
+  """
+  CTA button route
+  """
+  actionRoute: String
+
+  """
+  URL of the banner image
+  """
+  image: Image
+}
+
+"""
+Applications setting for nations benefits
+"""
+type ApplicationSettings {
+  """
+  URL for Nations Benefits's logo
+  """
+  nationsLogoUrl: String!
+
+  """
+  URL for NationsBenefits Android app on Play Store
+  """
+  androidAppUrl: String!
+
+  """
+  URL for NationsBenefits iOS app on App Store
+  """
+  iosAppUrl: String!
+}
+
+"""
+Get all Configurations for Insurance Carrier
+"""
+type Carrier {
+  """
+  ID of the carrier
+  """
+  id: ID!
+
+  """
+  Carrier's subdomain
+  """
+  subdomain: String!
+
+  """
+  Carrier's name (required)
+  """
+  name: String!
+
+  """
+  User Need to register or not
+  """
+  allowsRegistration: Boolean!
+
+  """
+  Otc Catalog access
+  """
+  allowCatalogDownload: Boolean!
+
+  """
+  Catalog image path, if download is available.
+  """
+  catalogImageUrl: String
+
+  """
+  URL for carrier's logo
+  """
+  logoUrl: String!
+
+  """
+  Carrier's phone number
+  """
+  phoneNumber: String
+
+  """
+  Carrier's phone TTY
+  """
+  phoneTty: String
+
+  """
+  URL for carrier's logo
+  """
+  hoursOperation: String
+
+  """
+  Promotional message to be displayed on the landing page for unauthenticated users
+  """
+  loginMessage: String
+
+  """
+  Does carrier have Personal Health Profile enabled
+  """
+  personalHealthProfileEnabled: Boolean!
+
+  """
+  The template for carrier specific login fields
+  """
+  loginTemplate: LoginTemplate!
+
+  """
+  Allows benefit card activation
+  """
+  cardActivationEnabled: Boolean!
+}
+
+"""
+A member is the insured person, who has access to the card and wallets to buy products.
+"""
+type Member {
+  """
+  Unique ID of the member account
+  """
+  nhMemberId: ID!
+
+  """
+  ID of the member account
+  """
+  memberId: String
+
+  """
+  ID of the carrier the member belongs to
+  """
+  carrierId: ID!
+
+  """
+  ID of the plan the member belongs to
+  """
+  planId: ID!
+
+  """
+  Insurance number
+  """
+  serialNumber: String
+
+  """
+  First Name of the Member
+  """
+  firstName: String!
+
+  """
+  Last Name of the Member
+  """
+  lastName: String!
+
+  """
+  Email address
+  """
+  emailAddress: String
+
+  """
+  Phone number
+  """
+  phoneNumber: String
+
+  """
+  Member's mailing address, also used for shipping
+  """
+  addresses: [Address!]!
+
+  """
+  Settigns and preferences
+  """
+  preferences: MemberPreferences!
+
+  """
+  Is the member fitted on SSBCI/OSB
+  """
+  ssbciOsbFitting: Boolean!
+
+  """
+  Has the member opted-in for grocery benefit
+  """
+  groceryOptIn: Boolean!
+
+  """
+  Determine whether the member has selected personalized health conditions
+  """
+  hasSelectedHealthConditions: Boolean!
+
+  """
+  Member HealthConditions
+  """
+  healthConditions: [String!]!
+
+  """
+  Members date of birth
+  """
+  dateOfBirth: Date
+}
+
+"""
+OTC benefit. Allows members to purchase for health products online or on retail stores.
+"""
+type Benefit {
+  """
+  ID of the benefit
+  """
+  id: ID!
+
+  """
+  Type of the benefit - HA, OTC, PERS, MEALS
+  """
+  benefitType: String!
+
+  """
+  Display name for the benefit
+  """
+  displayName: String!
+
+  """
+  Full name of the benefit
+  """
+  name: String!
+
+  """
+  Short name of the benefit
+  """
+  shortName: String!
+
+  """
+  Benefit description, plain text
+  """
+  description: String
+
+  """
+  Card attached to the benefit
+  """
+  card: Card
+
+  """
+  Hearing Aids Combined or Left/Right Ear
+  """
+  benefitPerType: BenefitPerType
+
+  """
+  List of wallets for the benefit
+  """
+  wallets: [Wallet!]!
+}
+
+input UpdateMemberHealthConditionsInput {
+  key: String!
+
+  isSelected: Boolean!
+}
+
+"""
+Member's flex card information. Used to purchase products outside the OTC portal.
+"""
+type Card {
+  """
+  Card's network, e.g. MasterCard, Visa.
+  """
+  network: CardNetwork
+
+  """
+  Card's issuer, e.g. FIS (Flex card provider), WEX. Helpful during checkout.
+  """
+  issuer: CardIssuer!
+
+  """
+  Card status
+  """
+  status: CardStatus!
+
+  """
+  Cardholder's name
+  """
+  holderName: String!
+
+  """
+  Last 4 digits of the card no.
+  """
+  last4: String!
+
+  """
+  Card expiry month
+  """
+  expiryMonth: Int!
+
+  """
+  Card expiry year
+  """
+  expiryYear: Int!
+
+  """
+  List of wallets attached to the card
+  """
+  wallets: [Wallet!]!
+
+  """
+  Card image visuals. Not all carriers may provide this, front-ends should implement a fallback image
+  """
+  image: Image!
+}
+
+"""
+The `Date` scalar represents an ISO-8601 compliant date type.
+"""
+scalar Date
+
+"""
+Preferences for the member. Used for app settings and notification preferences. All fields are optional.
+"""
+type MemberPreferences {
+  """
+  Member's preferred UI language
+  """
+  preferredLanguage: Language
+
+  """
+  Member's preferred font size
+  """
+  preferredFontSize: Int
+
+  """
+  Receive SMS notifications
+  """
+  receivesSMS: Boolean!
+
+  """
+  Receive email notifications
+  """
+  receivesEmail: Boolean!
+
+  """
+  Receive web/mobile notifications
+  """
+  receivesNotifications: Boolean!
+}
+
+"""
+Generic address information.
+"""
+type Address {
+  """
+  ID of the address
+  """
+  id: ID!
+
+  """
+  Address line 1
+  """
+  address1: String!
+
+  """
+  Address line 2
+  """
+  address2: String
+
+  """
+  City (required)
+  """
+  city: String!
+
+  """
+  State (required)
+  """
+  state: String!
+
+  """
+  ZIP code
+  """
+  zip: String!
+
+  """
+  For determining if this is the mebmer's preferred address
+  """
+  isPreferredAddress: Boolean!
+}
+
+"""
+An enumeration of possible login templates (combination of fieds)
+"""
+enum LoginTemplate {
+  OTCINCOMMSTANDARD2FA
+
+  OTCNATIONS2FA
+
+  OTCNATIONSSTANDARD
+
+  OTCUAWSTANDARD
+
+  OTCWEXSTANDARD
+}
+
+"""
+A product's picture to be shown to the member
+"""
+type Image {
+  """
+  URL for the image
+  """
+  url: String!
+}
+
+"""
+"Per" type of the benefit wallet. Currently only used for HA wallets - COMBINED or PER_EAR.
+"""
+enum BenefitPerType {
+  COMBINED
+
+  PER_EAR
+}
+
+"""
+A member's benefit wallet. Used to purchase products on the OTC portal.
+"""
+type Wallet {
+  """
+  Unique ID of the wallet. For caching only. Use walletCode for any transactions.
+  """
+  id: ID!
+
+  """
+  Wallet code - uniquely identifies a wallet. walletCode should be used over ID.
+  """
+  walletCode: String!
+
+  """
+  Wallet's icon to show to member
+  """
+  icon: String
+
+  """
+  Wallet display name.
+  """
+  displayName: String!
+
+  """
+  Numeric value for the balance initially loaded
+  """
+  currentBalance: Int!
+
+  """
+  Numeric value for the current balance
+  """
+  initialBalance: Int
+
+  """
+  Expiration date of the wallet. ISO date.
+  """
+  expiryDate: DateTime
+
+  """
+  Renewal date of the wallet. ISO date.
+  """
+  renewDate: DateTime
+
+  """
+  Measurement units for the balance (Amount in Cents, Count)
+  """
+  balanceType: WalletBalanceType!
+
+  """
+  Provider of the wallet balance. Similar to card issuer.
+  """
+  walletIssuer: WalletIssuer!
+
+  """
+  Flag to determine if this is a reward wallet.
+  """
+  isRewardWallet: Boolean!
+
+  """
+  For HA benefit only. Defines which ear the wallet can be used for.
+  """
+  side: PerTypeSide
+
+  """
+  Wallet usable within online/offline/both stores and environments.
+  """
+  walletUsage: WalletUsage!
+}
+
+"""
+Side definition of the 'per' type of HA benefit. Can be used for the left, right or both ears (if per type is COMBINED).
+"""
+enum PerTypeSide {
+  LEFT
+
+  RIGHT
+
+  BOTH
+}
+
+"""
+Issuer of wallet balance.
+"""
+enum WalletIssuer {
+  FIS
+
+  WEX
+
+  NATIONS
+
+  INCOMM
+}
+
+"""
+Type of a wallet. To determine the difference between a monetary and an item wallet.
+"""
+enum WalletBalanceType {
+  AMOUNT
+
+  COUNT
+}
+
+"""
+The `DateTime` scalar represents an ISO-8601 compliant date time type.
+"""
+scalar DateTime
+
+"""
+An enumeration of possible UI languages.
+"""
+enum Language {
+  ENGLISH
+
+  SPANISH
+
+  CHINESE
+
+  VIETNAMESE
+
+  KOREAN
+
+  PORTUGESE
+}
+
+"""
+Enumeration of possible card statuses.
+"""
+enum CardStatus {
+  READY
+
+  ACTIVE
+
+  HOLD
+
+  LOST
+
+  SUSPENDED
+
+  CLOSED
+
+  FRAUD
+
+  PFRAUD
+}
+
+"""
+An enumeration of possible card issuers.
+"""
+enum CardIssuer {
+  FIS
+
+  WEX
+
+  INCOMM
+}
+
+"""
+An enumeration of possible card networks.
+"""
+enum CardNetwork {
+  VISA
+
+  MASTERCARD
+}
+
+enum WalletUsage {
+  ONLINE
+
+  OFFLINE
+
+  BOTH
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}
