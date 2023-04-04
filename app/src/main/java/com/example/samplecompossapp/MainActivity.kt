@@ -62,6 +62,10 @@ class MainActivity : FragmentActivity() {
             }
         }
 
+        //comment in dev
+
+
+
        /* generateSecretKey(KeyGenParameterSpec.Builder(
             "SRINIVAS",
             KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
