@@ -1,5 +1,8 @@
 package com.example.samplecompossapp.ui.home
 
+import android.annotation.SuppressLint
+import android.app.Activity
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -14,21 +17,44 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.apollographql.apollo3.api.ApolloResponse
 import com.example.rocketreserver.GetCarrierDetailsQuery
 import com.example.rocketreserver.GetMemberDetailsQuery
+import com.example.samplecompossapp.MainActivity
 import com.example.samplecompossapp.R
 import com.example.samplecompossapp.model.Movie
 import com.example.samplecompossapp.ui.listcards.MovieCard
 import com.example.samplecompossapp.ui.theme.Typography
 import com.example.samplecompossapp.ui.viewmodel.CountryViewModel
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
+import dagger.hilt.android.EntryPointAccessors
+import dagger.hilt.android.components.ActivityComponent
+import javax.inject.Inject
 
+/*@Inject
+lateinit var carrierIdFactory: CountryViewModel.CarrierIDFactory*/
+
+@EntryPoint
+@InstallIn(ActivityComponent::class)
+interface ViewModelFactoryProvider {
+    fun mainViewModelFactory(): CountryViewModel.CarrierIDFactory
+}
+
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun BooksView() {
-    val countryViewModel = hiltViewModel<CountryViewModel>()
+   // val countryViewModel = hiltViewModel<CountryViewModel>()
+
+    val factory = EntryPointAccessors.fromActivity(
+        LocalContext.current as Activity,
+        ViewModelFactoryProvider::class.java
+    ).mainViewModelFactory()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -36,11 +62,13 @@ fun BooksView() {
             .wrapContentSize(Alignment.TopCenter)
     ) {
 
+      val countryViewModel: CountryViewModel = viewModel(factory = CountryViewModel.providesFactory(factory, "300"))
+
+
         LaunchedEffect(Unit){
             countryViewModel.getCarriers()
             countryViewModel.getMember()
         }
-
 
 
         when (val state = countryViewModel.uiState.collectAsState().value) {

@@ -33,10 +33,10 @@ fun UserDataScreen(
     val systemUiController = rememberSystemUiController()
     val useDarkIcons = MaterialTheme.colors.isLight
 
-    SideEffect {
+   /* SideEffect {
         systemUiController.setNavigationBarColor(color = Color.Green,darkIcons = useDarkIcons)
         systemUiController.setStatusBarColor(Color.Yellow, darkIcons = useDarkIcons)
-    }
+    }*/
 
 
     Column(

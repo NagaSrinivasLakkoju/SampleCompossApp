@@ -4,6 +4,7 @@ plugins {
     id ("dagger.hilt.android.plugin")
     id ("kotlin-kapt")
     id("com.apollographql.apollo3").version("3.7.4")
+
 }
 
 android {
@@ -53,11 +54,12 @@ android {
 }
 
 dependencies {
-    implementation ("androidx.constraintlayout:constraintlayout-compose:1.0.1")
-   /* def material3_version = "1.0.1"
-    def compose_version = "1.3.1"
-    def camerax_version = "1.0.1"*/
-    implementation ("androidx.core:core-ktx:1.9.0")
+  //  implementation ("androidx.constraintlayout:constraintlayout-compose:1.0.1")
+  //  implementation ("androidx.core:core-ktx:1.9.0")
+
+    implementation(libs.constraint.layout)
+    implementation(libs.kotlin.ktx)
+
     implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
     implementation ("androidx.activity:activity-compose:1.6.1")
     implementation ("androidx.compose.ui:ui:1.3.3")
@@ -74,9 +76,15 @@ dependencies {
     implementation ("com.google.accompanist:accompanist-navigation-animation:0.29.1-alpha")
     implementation ("androidx.compose.material3:material3:1.0.1")
 
+
     //Coil for Image
-    implementation("io.coil-kt:coil-compose:2.2.2")
-    implementation("io.coil-kt:coil-svg:2.2.2")
+  //  implementation("io.coil-kt:coil-compose:2.2.2")
+  //  implementation("io.coil-kt:coil-svg:2.2.2")
+
+   implementation(libs.coil)
+   implementation(libs.coil.svg)
+
+
 
     //CameraX
     implementation ("androidx.camera:camera-camera2:1.0.1")
@@ -95,8 +103,9 @@ dependencies {
     implementation ("androidx.hilt:hilt-navigation-compose:1.0.0")
 
     // Dagger Hilt
-    implementation ("com.google.dagger:hilt-android:2.43.2")
-    kapt ("com.google.dagger:hilt-android-compiler:2.43.2")
+    implementation ("com.google.dagger:hilt-android:2.45")
+    implementation("androidx.hilt:hilt-work:1.0.0")
+    kapt ("com.google.dagger:hilt-android-compiler:2.45")
 
     //Rxjava-2 call adapter
     implementation ("com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0")

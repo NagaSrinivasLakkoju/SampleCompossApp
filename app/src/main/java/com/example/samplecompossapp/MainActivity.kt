@@ -27,8 +27,12 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import com.example.samplecompossapp.ui.launchscreens.MainActivityContent
 import com.example.samplecompossapp.ui.theme.SampleCompossAppTheme
+import com.example.samplecompossapp.ui.viewmodel.CountryViewModel
 import com.example.samplecompossapp.utils.TopBar
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.components.ActivityComponent
 import java.nio.charset.Charset
 import java.security.KeyStore
 import java.util.*
